@@ -6,7 +6,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
+                echo "Setting Docker to Minikube..."
                 eval $(minikube docker-env)
+
+                echo "Building Docker Image..."
                 docker build -t notes-app .
                 '''
             }
@@ -15,16 +18,23 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh '''
+                echo "Deploying to Kubernetes..."
+
                 kubectl apply -f deployment.yaml
                 kubectl apply -f service.yaml
                 '''
             }
         }
 
-        stage('Verify') {
+        stage('Verify Deployment') {
             steps {
-                sh 'kubectl get pods'
-                sh 'kubectl get svc'
+                sh '''
+                echo "Checking Pods..."
+                kubectl get pods
+
+                echo "Checking Services..."
+                kubectl get svc
+                '''
             }
         }
     }
