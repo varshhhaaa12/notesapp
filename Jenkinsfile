@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        KUBECONFIG = '/home/user/.kube/config'
+    }
+
     stages {
 
         stage('Check Kubernetes') {
