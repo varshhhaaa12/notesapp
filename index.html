@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Notes App</h2>
+
+<input id="note" placeholder="Enter note">
+<button onclick="addNote()">Add</button>
+
+<ul id="list"></ul>
+
+<script>
+function loadNotes() {
+  fetch('http://localhost:3000/notes')
+  .then(res => res.json())
+  .then(data => {
+    let html = "";
+    data.forEach((n, i) => {
+      html += `<li>${n} <button onclick="deleteNote(${i})">Delete</button></li>`;
+    });
+    document.getElementById("list").innerHTML = html;
+  });
+}
+
+function addNote() {
+  let note = document.getElementById("note").value;
+
+  fetch('http://localhost:3000/notes', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({note})
+  }).then(loadNotes);
+}
+
+function deleteNote(id) {
+  fetch('http://localhost:3000/notes/' + id, {
+    method: 'DELETE'
+  }).then(loadNotes);
+}
+
+loadNotes();
+</script>
+
+</body>
+</html>
