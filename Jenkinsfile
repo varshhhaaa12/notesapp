@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         KUBECONFIG = '/home/user/.kube/config'
+        DOCKERHUB_USERNAME = 'varshakatrepally'
     }
 
     stages {
@@ -16,8 +17,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                eval $(minikube docker-env)
-                docker build -t notes-app .
+                docker build -t $DOCKERHUB_USERNAME/notes-app .
+                '''
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                sh '''
+                docker push $DOCKERHUB_USERNAME/notes-app
                 '''
             }
         }
