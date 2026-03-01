@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -7,9 +8,9 @@ pipeline {
 
     stages {
 
-        stage('Check Kubernetes') {
+        stage('Start Minikube') {
             steps {
-                sh 'minikube status'
+                sh 'minikube start'
             }
         }
 
@@ -31,7 +32,7 @@ pipeline {
             }
         }
 
-        stage('Verify Deployment') {
+        stage('Verify') {
             steps {
                 sh 'kubectl get pods'
                 sh 'kubectl get svc'
