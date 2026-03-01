@@ -1,18 +1,7 @@
-
 pipeline {
     agent any
 
-    environment {
-        HOME = '/home/user'
-    }
-
     stages {
-
-        stage('Start Minikube') {
-            steps {
-                sh 'minikube start'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
