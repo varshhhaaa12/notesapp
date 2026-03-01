@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         KUBECONFIG = '/home/user/.kube/config'
-        DOCKERHUB_USERNAME = 'varshakatrepally'
     }
 
     stages {
@@ -16,17 +15,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh '''
-                docker build -t $DOCKERHUB_USERNAME/notes-app .
-                '''
+                sh 'docker build -t varshakatrepally/notes-app .'
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh '''
-                docker push $DOCKERHUB_USERNAME/notes-app
-                '''
+                sh 'docker push varshakatrepally/notes-app'
             }
         }
 
