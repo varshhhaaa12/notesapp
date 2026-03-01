@@ -18,8 +18,8 @@ spec:
 
     spec:
       containers:
-      - name: notes-container
-        image: notes-app:latest
-        imagePullPolicy: Never
+  - name: notes-app
+    image: varshakatrepally/notes-app
+    imagePullPolicy: Always
         ports:
         - containerPort: 3000
